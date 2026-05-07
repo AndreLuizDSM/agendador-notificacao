@@ -23,8 +23,9 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
 
+
     @Value("${envio.email.remetente}")
-    public String remetente;
+    private String remetente;
 
     @Value("${envio.email.nomeRemetente}")
     private String nomeRemetente;
@@ -48,7 +49,7 @@ public class EmailService {
             javaMailSender.send(mensagem);
 
         } catch (MessagingException | UnsupportedEncodingException e){
-            throw new EmailException("Erro ao enviar email ", e.getCause());
+            throw new EmailException("Erro ao enviar email ", e);
         }
     }
 }
