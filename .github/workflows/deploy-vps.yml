@@ -19,7 +19,7 @@ jobs:
 
 
           script: |
-            cd /root/app/agendador-usuario
+            cd /root/app/agendador-notificacao
             git pull origin master 
             cd ..
             docker compose down --remove-orphans
