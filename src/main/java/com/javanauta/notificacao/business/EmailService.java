@@ -1,6 +1,6 @@
 package com.javanauta.notificacao.business;
 
-import com.javanauta.notificacao.business.dtos.TarefaDTO;
+import com.javanauta.notificacao.business.dtos.TarefaRequestDTO;
 import com.javanauta.notificacao.infrastructure.EmailException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.swing.text.DateFormatter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -30,20 +34,21 @@ public class EmailService {
     @Value("${envio.email.nomeRemetente}")
     private String nomeRemetente;
 
-    public void enviaEmail(TarefaDTO dto) {
+    public void enviaEmail(TarefaRequestDTO dto) {
         try {
             MimeMessage mensagem = javaMailSender.createMimeMessage();
 
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mensagem, true,
                     StandardCharsets.UTF_8.name());
             mimeMessageHelper.setFrom(new InternetAddress(remetente, nomeRemetente));
-            mimeMessageHelper.setTo(InternetAddress.parse(dto.getEmailUsuario()));
+            mimeMessageHelper.setTo(InternetAddress.parse(dto.email()));
             mimeMessageHelper.setSubject("Notificação de Tarefa");
 
+
             Context context = new Context();
-            context.setVariable("nomeTarefa", dto.getNomeTarefa());
-            context.setVariable("dataEvento", dto.getDataEvento());
-            context.setVariable("descricao",  dto.getDescricao());
+            context.setVariable("nomeTarefa", dto.nomeTarefa());
+            context.setVariable("dataEvento", dateFormatter(dto.dataEvento()));
+            context.setVariable("descricao",  dto.descricao());
             String template = templateEngine.process("notificacao", context);
             mimeMessageHelper.setText(template, true);
             javaMailSender.send(mensagem);
@@ -51,5 +56,10 @@ public class EmailService {
         } catch (MessagingException | UnsupportedEncodingException e){
             throw new EmailException("Erro ao enviar email ", e);
         }
+    }
+
+    private String dateFormatter(LocalDateTime dataEvento) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        return dataEvento.format(formatter);
     }
 }
