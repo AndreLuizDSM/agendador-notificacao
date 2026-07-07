@@ -13,13 +13,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.swing.text.DateFormatter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +57,7 @@ public class EmailService {
         }
     }
 
-    private String dateFormatter(Instant dataEvento) {
+    private String dateFormatter(LocalDateTime dataEvento) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         // O valor chega em UTC; converte para o horário de Brasília para exibição no e-mail
         return dataEvento.atZone(ZoneId.of("America/Sao_Paulo")).format(formatter);
