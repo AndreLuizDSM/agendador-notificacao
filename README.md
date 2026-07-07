@@ -96,7 +96,7 @@ Envia um e-mail de notificação com os dados da tarefa.
 | `email` | `String` | e-mail válido | Destinatário do e-mail |
 | `nomeTarefa` | `String` | — | Nome da tarefa cadastrada |
 | `descricao` | `String` | — | Descrição da tarefa |
-| `dataEvento` | `LocalDateTime` | `dd-MM-yyyy HH:mm:ss` | Data e hora do evento |
+| `dataEvento` | `OffsetDateTime` | `dd-MM-yyyy HH:mm:ss` (recebido em UTC; convertido para America/Sao_Paulo no corpo do e-mail) | Data e hora do evento |
 
 > ⚠️ O campo `email` deve ser um endereço válido — o envio é realizado diretamente pelo Gmail.
 

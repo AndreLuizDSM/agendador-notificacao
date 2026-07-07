@@ -16,7 +16,8 @@ import org.thymeleaf.context.Context;
 import javax.swing.text.DateFormatter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -58,8 +59,9 @@ public class EmailService {
         }
     }
 
-    private String dateFormatter(LocalDateTime dataEvento) {
+    private String dateFormatter(OffsetDateTime dataEvento) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        return dataEvento.format(formatter);
+        // O valor chega em UTC; converte para o horário de Brasília para exibição no e-mail
+        return dataEvento.atZoneSameInstant(ZoneId.of("America/Sao_Paulo")).format(formatter);
     }
 }
