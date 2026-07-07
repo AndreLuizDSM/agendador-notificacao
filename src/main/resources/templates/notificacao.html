@@ -2,53 +2,145 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Notificação de Tarefas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificação de Tarefa</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-         }
-        .container {
-            width: 80%;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-         }
-        .header {
-            text-align: center;
-            color: #333;
+            background-color: #eef1f5;
+            -webkit-font-smoothing: antialiased;
         }
-        .content {
-            margin: 20px 0;
+        table {
+            border-collapse: collapse;
+        }
+        .wrapper {
+            width: 100%;
+            background-color: #eef1f5;
+            padding: 40px 16px;
+        }
+        .card {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(23, 31, 46, 0.08);
+        }
+        .band {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            padding: 32px 40px;
+        }
+        .band-eyebrow {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin: 0 0 8px;
+        }
+        .band-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .body {
+            padding: 36px 40px 8px;
+        }
+        .lede {
+            font-size: 15px;
+            color: #6b7280;
+            margin: 0 0 20px;
+        }
+        .task-card {
+            background: #f5f6fb;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+        .task-name {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1f2430;
+            margin: 0 0 12px;
+        }
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .meta-label {
+            font-size: 13px;
+            color: #8b90a0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .meta-value {
+            display: inline-block;
+            background: #eef0ff;
+            color: #4f46e5;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 999px;
+            margin-top: 6px;
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1f2430;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin: 0 0 8px;
+        }
+        .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444a58;
+            margin: 0 0 32px;
+            white-space: pre-line;
         }
         .footer {
+            padding: 24px 40px 32px;
+            border-top: 1px solid #eef0f4;
             text-align: center;
-            color: #555;
         }
-        .important {
-            font-weight: bold;
-            color: #d9534f;
-         }
+        .footer p {
+            font-size: 13px;
+            color: #9aa0ac;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Notificação de tarefas</h1>
-    </div>
-    <div class="content">
-        <p>Aviso: Sua tarefa <span class="important" th:text="${nomeTarefa}">Nome da Tarefa</span>
-            está agendada para hoje às <span class="important" th:text="${dataEvento}">Horário</span> </p>
-        <p>Confira sua descrição</p>
-        <p th:text="${descricao}">Descrição de tarefas.</p>
-    </div>
-    <div class="footer">
-        <p>Obrigado por usar nosso sistema de tarefas.</p>
+<div class="wrapper">
+    <div class="card">
+        <div class="band">
+            <p class="band-eyebrow">Lembrete de tarefa</p>
+            <h1 class="band-title">Você tem uma tarefa agendada</h1>
+        </div>
+        <div class="body">
+            <p class="lede">Este é um lembrete automático sobre a tarefa abaixo.</p>
+
+            <div class="task-card">
+                <p class="task-name" th:text="${nomeTarefa}">Nome da Tarefa</p>
+                <div class="meta-row">
+                    <div>
+                        <div class="meta-label">Agendada para</div>
+                        <div class="meta-value" th:text="${dataEvento}">Horário</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="section-label">Descrição</p>
+            <p class="description" th:text="${descricao}">Descrição de tarefas.</p>
+        </div>
+        <div class="footer">
+            <p>Obrigado por usar nosso sistema de tarefas.</p>
+        </div>
     </div>
 </div>
 </body>
