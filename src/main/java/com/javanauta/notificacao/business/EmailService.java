@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -60,6 +61,8 @@ public class EmailService {
     private String dateFormatter(LocalDateTime dataEvento) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         // O valor chega em UTC; converte para o horário de Brasília para exibição no e-mail
-        return dataEvento.atZone(ZoneId.of("America/Sao_Paulo")).format(formatter);
+        return dataEvento.atZone(ZoneOffset.UTC)                       // interpreta o valor como UTC
+                .withZoneSameInstant(ZoneId.of("America/Sao_Paulo"))  // move para o mesmo instante em SP (-3h)
+                .format(formatter);
     }
 }
